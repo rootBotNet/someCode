@@ -1,0 +1,37 @@
+package za.co.metropolitan.ayo.policy.mapper;
+
+import com.mmiholdings.product.domain.PayWithCareEnrollment;
+import com.mmiholdings.product.dto.pwc.v1.model.PayWithCareEnrollmentResponse;
+import org.mapstruct.Mapper;
+import org.mapstruct.MappingTarget;
+import org.mapstruct.ReportingPolicy;
+import org.mapstruct.factory.Mappers;
+
+@Mapper(unmappedTargetPolicy = ReportingPolicy.ERROR,
+        disableSubMappingMethodsGeneration = true,
+        uses = {ClientCampaignMapper.class, PaymentMethodMapper.class})
+public abstract class PayWithCareEnrollmentMapper {
+
+    public static PayWithCareEnrollmentMapper INSTANCE = Mappers.getMapper(PayWithCareEnrollmentMapper.class);
+
+    public com.mmiholdings.product.domain.PayWithCareEnrollment mapToModel(com.mmiholdings.product.dto.pwc.v1.model.PayWithCareEnrollmentRequest value) {
+        PayWithCareEnrollment model = mapPayWithCareEnrollmentRequestToModel(value);
+        mapToModel(value, model);
+        return model;
+    }
+
+    public abstract com.mmiholdings.product.domain.PayWithCareEnrollment mapPayWithCareEnrollmentRequestToModel(com.mmiholdings.product.dto.pwc.v1.model.PayWithCareEnrollmentRequest value);
+
+    public abstract void mapToModel(com.mmiholdings.product.dto.Policy source, @MappingTarget com.mmiholdings.product.dto.Policy target);
+
+    public com.mmiholdings.product.dto.pwc.v1.model.PayWithCareEnrollmentResponse mapToResponseModel(com.mmiholdings.product.domain.PayWithCareEnrollment value) {
+        PayWithCareEnrollmentResponse responseModel = mapPayWithCareEnrollmentToResponseModel(value);
+        mapToResponseModel(value, responseModel);
+        return responseModel;
+    }
+
+    public abstract com.mmiholdings.product.dto.pwc.v1.model.PayWithCareEnrollmentResponse mapPayWithCareEnrollmentToResponseModel(com.mmiholdings.product.domain.PayWithCareEnrollment value);
+
+    public abstract void mapToResponseModel(com.mmiholdings.product.dto.Policy source, @MappingTarget com.mmiholdings.product.dto.Policy target);
+
+}
